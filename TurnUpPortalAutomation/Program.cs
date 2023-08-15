@@ -9,6 +9,7 @@ driver.Manage().Window.Maximize();
 // Launch turnup portal and navigation to login
 driver.Navigate().GoToUrl("http://horse.industryconnect.io/");
 
+//adding a change 
 //Identify username textbox and enter Valid username 
 IWebElement usernameTextbox = driver.FindElement(By.Id("UserName"));
 usernameTextbox.SendKeys("hari");
