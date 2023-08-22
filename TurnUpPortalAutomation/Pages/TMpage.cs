@@ -1,9 +1,11 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TurnUpPortalAutomation.Utilities;
 
 namespace TurnUpPortalAutomation.Pages
 {
@@ -51,24 +53,32 @@ namespace TurnUpPortalAutomation.Pages
             Thread.Sleep(1000);
 
             //check if new time record has been created suceesfully 
-
+            Wait.Waittobeclickable(driver, "Xpath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span",2);
             IWebElement gotolastbutton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
             gotolastbutton.Click();
 
+            Thread.Sleep(1000);
+
             IWebElement newrecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
 
-            if (newrecord.Text == "August16th")
-            {
-                Console.WriteLine("New Time record has been created sucessfully ");
-            }
-            else
-            {
-                Console.WriteLine("Time record has not been created ");
+            Assert.That(newrecord.Text == "August16th", "Time record has not been created ");
 
-            }
+            //if (newrecord.Text == "August16th")
+            //{
+            //    Assert .Pass("New Time record has been created sucessfully ");
+            //}
+            //else
+            //{
+            //    Assert.Fail("Time record has not been created ");
+
+            //}
         }
         public void EditTimeRecord(IWebDriver driver)
         {
+            IWebElement gotolastpageforedit = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+
+            gotolastpageforedit.Click();
+
             //click on Edit button 
 
             IWebElement Editbutton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[1]"));
@@ -115,6 +125,7 @@ namespace TurnUpPortalAutomation.Pages
 
             gotolastpage.Click();
 
+            Thread.Sleep(1000);
 
             IWebElement editedrecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
             if (editedrecord.Text == "August19th")
@@ -133,16 +144,20 @@ namespace TurnUpPortalAutomation.Pages
         {
             //delete button 
 
+            IWebElement gotolastpagefordelete = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+
+            gotolastpagefordelete.Click();
 
             //click delete button 
 
-            IWebElement deletebutton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[8]/td[5]/a[2]"));
+            IWebElement deletebutton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[2]"));
             deletebutton.Click();
 
             Thread.Sleep(2000);
 
             //navigate to popup page & Click ok Button
             driver.SwitchTo().Alert().Accept();
+
             Thread.Sleep(2000);
 
             //check the deleted record is disappered 
