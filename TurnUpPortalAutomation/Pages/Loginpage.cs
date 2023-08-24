@@ -42,8 +42,8 @@ namespace TurnUpPortalAutomation.Pages
             //Identify login button and clck on the button 
             // Fluent Wait Implimentation 
             Wait.Waittobeclickable(driver,"Xpath", "//*[@id=\"loginForm\"]/form/div[3]/input[1]", 2);
-            IWebElement loginbutton = driver.FindElement(By.XPath("//*[@id=\"loginForm\"]/form/div[3]/input[1]"));
-            loginbutton.Click();
+            IWebElement loginButton = driver.FindElement(By.XPath("//*[@id=\"loginForm\"]/form/div[3]/input[1]"));
+            loginButton.Click();
 
             //Thread.Sleep(1000);
 

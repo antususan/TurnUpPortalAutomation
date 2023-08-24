@@ -11,6 +11,7 @@ using TurnUpPortalAutomation.Utilities;
 
 namespace TurnUpPortalAutomation.Tests
 {
+    [Parallelizable]
     [TestFixture]
     public class TM_Test:CommonDriver
     {
@@ -18,34 +19,34 @@ namespace TurnUpPortalAutomation.Tests
         public void SetUpTM()
         {
             //open the browser 
-             driver = new ChromeDriver();
 
+            driver = new ChromeDriver();
 
             //wait Implicit wait 
             //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
             // Login page object initialization and definition 
-            Loginpage loginpageObj = new Loginpage();
-            loginpageObj.LoginActions(driver);
+            Loginpage loginPageObj = new Loginpage();
+            loginPageObj.LoginActions(driver);
 
             // Home page object initialization and definition
-            Homepage homePageobj = new Homepage();
-            homePageobj.GoToTMPage(driver);
+            Homepage homePageObj = new Homepage();
+            homePageObj.GoToTMPage(driver);
 
         }
-        [Test]
+        [Test,Order (1),Description("This Test create a new Time record with Valid Data")]
         public void createTime_Test()
         {
             TMpage tmPageObj = new TMpage();
-            tmPageObj.createTimeRecord(driver);
+            tmPageObj.CreateTimeRecord(driver);
         }
-        [Test]
+        [Test,Order(2), Description("This Test Edit an existing Time Record  with Valid Data")]
         public void EditTime_Test()
         {
             TMpage tmPageObj = new TMpage();
             tmPageObj.EditTimeRecord(driver);
         }
-        [Test]
+        [Test,Order(3), Description("This Test Delete an existing Time Record ")]
         public void DeleteTime_Test()
         {
             TMpage tmPageObj = new TMpage();
