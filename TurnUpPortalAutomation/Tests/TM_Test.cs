@@ -44,7 +44,7 @@ namespace TurnUpPortalAutomation.Tests
         public void EditTime_Test()
         {
             TMpage tmPageObj = new TMpage();
-            tmPageObj.EditTimeRecord(driver);
+            tmPageObj.EditTimeRecord(driver,"Whatever");
         }
         [Test,Order(3), Description("This Test Delete an existing Time Record ")]
         public void DeleteTime_Test()

@@ -40,10 +40,27 @@ namespace TurnUpPortalAutomation.StepDefinitions
         public void ThenTheRecordShouldBeCreatedSucessfully()
         {
             TMpage tmPageObj = new TMpage();
-           string newCode = tmPageObj.GetCode(driver);
-           Assert.That(newCode == "August16th", "Time record has not been created ");
+           string newRecord = tmPageObj.GetCode(driver);
+           Assert.That(newRecord == "August16th", "Time record has not been created ");
 
 
         }
+
+        [When(@"I update '([^']*)' on an existing Time record")]
+        public void WhenIUpdateOnAnExistingTimeRecord(string P0)
+        {
+            TMpage tmPageObj = new TMpage();
+            tmPageObj.EditTimeRecord(driver, P0);
+        }
+
+        [Then(@"the record should have an  updated '([^']*)'")]
+        public void ThenTheRecordShouldHaveAnUpdated(string P0)
+        {
+            TMpage tmPageObj = new TMpage();
+            string editedCode = tmPageObj.GetEditedCode(driver);
+            Assert.That(editedCode == P0, "The Record has not been updated ");
+
+        }
+
     }
 }

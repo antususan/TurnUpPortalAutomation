@@ -68,12 +68,13 @@ namespace TurnUpPortalAutomation.Pages
 
       
         }
+        //creating method for assertion Assertion 
         public string GetCode(IWebDriver driver)
         {
             IWebElement newRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
             return newRecord.Text;
         }
-        public void EditTimeRecord(IWebDriver driver)
+        public void EditTimeRecord(IWebDriver driver,string Code)
         {
             IWebElement goToLastPageButtonForEdit = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
 
@@ -98,7 +99,7 @@ namespace TurnUpPortalAutomation.Pages
             Wait.Waittobevisible(driver, "Id", "Code", 2);
             IWebElement editCodeTextbox = driver.FindElement(By.Id("Code"));
             editCodeTextbox.Clear();
-            editCodeTextbox.SendKeys("August19th");
+            editCodeTextbox.SendKeys(Code);
 
 
             //Edit Description 
@@ -131,21 +132,13 @@ namespace TurnUpPortalAutomation.Pages
 
             Wait.Waittobeclickable(driver, "Xpath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 2);
 
-            //Verify if the edited record has been changed sucessfully 
-
+            
+        }
+        // Impliment assertion method 
+        public string GetEditedCode(IWebDriver driver)
+        {
             IWebElement editedRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-
-            Assert.That(editedRecord.Text == "August19th", "Record has not been Edited");
-            //if (editedRecord.Text == "August19th")
-            //{
-            //    Console.WriteLine("Record has been sucessfully Edited ");
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Record has not been Edited  ");
-            //}
-
-
+            return editedRecord.Text;
         }
 
         public void DeleteTimeRecord(IWebDriver driver)
