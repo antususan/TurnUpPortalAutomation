@@ -171,28 +171,26 @@ namespace TurnUpPortalAutomation.Pages
             IWebElement saveButton = driver.FindElement(By.Id("SaveButton"));
             saveButton.Click();
 
+            Thread.Sleep(7000);
 
             // Back to list page to check the new employee details has been added 
-            Wait.Waittobeclickable(driver, "Xpath", "//*[@id=\"container\"]/div/a", 5);
+            //Wait.Waittobeclickable(driver, "Xpath", "//*[@id=\"container\"]/div/a", 10);
             IWebElement backToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"container\"]/div/a"));
             backToLastPageButton.Click();
 
 
-            // Goto list page to check the new employee details has been added 
-            Wait.Waittobeclickable(driver, "Xpath", "//*[@id=\"usersGrid\"]/div[4]/a[4]", 5);
+            // Goto last page to check the new employee details has been added 
+            Wait.Waittobeclickable(driver, "Xpath", "//*[@id=\"usersGrid\"]/div[4]/a[4]", 10);
             IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"usersGrid\"]/div[4]/a[4]"));
             goToLastPageButton.Click();
 
+            Thread.Sleep(7000);
          
-            Wait.Waittobevisible(driver, "Xpath", "//*[@id=\"usersGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 5);
+            //Wait.Waittobevisible(driver, "Xpath", "//*[@id=\"usersGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 5);
             IWebElement newEmployeeRecord = driver.FindElement(By.XPath("//*[@id=\"usersGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-        
-            Assert.That(newEmployeeRecord.Text == "Ekkujames","New Employee has not been created");
+            Assert.That(newEmployeeRecord.Text == "Ekkujames", "New Employee has not been created");
 
-  
-           
-
-
+            Thread.Sleep(7000);
         }
 
         public void EditEmployee(IWebDriver driver)

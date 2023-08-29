@@ -66,18 +66,12 @@ namespace TurnUpPortalAutomation.Pages
 
             IWebElement newRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
 
-            //Assertion
-            Assert.That(newRecord.Text == "August16th", "Time record has not been created ");
-
-            //if (newrecord.Text == "August16th")
-            //{
-            //    Assert .Pass("New Time record has been created sucessfully ");
-            //}
-            //else
-            //{
-            //    Assert.Fail("Time record has not been created ");
-
-            //}
+      
+        }
+        public string GetCode(IWebDriver driver)
+        {
+            IWebElement newRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+            return newRecord.Text;
         }
         public void EditTimeRecord(IWebDriver driver)
         {
