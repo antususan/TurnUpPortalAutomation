@@ -2,6 +2,7 @@ using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Security.AccessControl;
+using System.Security.Policy;
 using TechTalk.SpecFlow;
 using TurnUpPortalAutomation.Pages;
 using TurnUpPortalAutomation.Utilities;
@@ -9,15 +10,19 @@ using TurnUpPortalAutomation.Utilities;
 namespace TurnUpPortalAutomation.StepDefinitions
 {
     [Binding]
-    public class TMFeatureStepDefinitions:CommonDriver
+    public class TMFeatureStepDefinitions : CommonDriver
     {
+        Loginpage loginPageObj = new Loginpage();
+        Homepage homePageObj = new Homepage();
+        TMpage tmPageObj = new TMpage();
+
         [Given(@"I logged in to TurnUp portal Successfully")]
         public void GivenILoggedInToTurnUpPortalSuccessfully()
 
         {
             driver = new ChromeDriver();
             // Login page object initialization and definition 
-            Loginpage loginPageObj = new Loginpage();
+            
             loginPageObj.LoginActions(driver);
         }
 
@@ -25,42 +30,50 @@ namespace TurnUpPortalAutomation.StepDefinitions
         public void GivenINavigateToTimeAndMaterialPage()
         {
             // Home page object initialization and definition
-            Homepage homePageObj = new Homepage();
+            
             homePageObj.GoToTMPage(driver);
         }
 
         [When(@"I create a new time record")]
         public void WhenICreateANewTimeRecord()
         {
-            TMpage tmPageObj = new TMpage();
+           
             tmPageObj.CreateTimeRecord(driver);
         }
 
         [Then(@"the record should be created sucessfully")]
         public void ThenTheRecordShouldBeCreatedSucessfully()
         {
-            TMpage tmPageObj = new TMpage();
-           string newRecord = tmPageObj.GetCode(driver);
-           Assert.That(newRecord == "August16th", "Time record has not been created ");
+            
+            string newRecord = tmPageObj.GetCode(driver);
+            Assert.That(newRecord == "August16th", "Time record has not been created ");
 
 
         }
 
-        [When(@"I update '([^']*)' on an existing Time record")]
-        public void WhenIUpdateOnAnExistingTimeRecord(string P0)
+        [When(@"I update '([^']*)' and '([^']*)'on an existing Time record")]
+        public void WhenIUpdateAndOnAnExistingTimeRecord(string p0, string p1)
         {
-            TMpage tmPageObj = new TMpage();
-            tmPageObj.EditTimeRecord(driver, P0);
+            
+            tmPageObj.EditTimeRecord(driver,p0,p1);
+
         }
 
-        [Then(@"the record should have an  updated '([^']*)'")]
-        public void ThenTheRecordShouldHaveAnUpdated(string P0)
+        [Then(@"the record should have an  updated '([^']*)'and '([^']*)'")]
+        public void ThenTheRecordShouldHaveAnUpdatedAnd(string p0, string p1)
         {
-            TMpage tmPageObj = new TMpage();
             string editedCode = tmPageObj.GetEditedCode(driver);
-            Assert.That(editedCode == P0, "The Record has not been updated ");
+            string editedDescription = tmPageObj.GetEditedDescription(driver);
+            Assert.That(editedCode == p0, "Edited code has not been updated ");
+            Assert.That(editedDescription == p1, "Edited description has not been updated ");
 
         }
+
+
+
+
+
+
 
     }
 }

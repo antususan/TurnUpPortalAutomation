@@ -14,11 +14,13 @@ Scenario: create time record with valid details
 Scenario Outline: edit time record with valid data 
 	Given I logged in to TurnUp portal Successfully
 	And I navigate to Time and Material page
-	When I update '<Code>' on an existing Time record 
-	Then the record should have an  updated '<Code>'
+	When I update '<Code>' and '<Description>'on an existing Time record 
+	Then the record should have an  updated '<Code>'and '<Description>'
 
 Examples: 
-| Code     |
-| Pen      |
-| Keyboard |
-| Bottle   |
+| Code     | Description|
+| Pen      | Monday     |
+| Keyboard | Numbers    |
+| Bottle   | Driver     |
+
+  

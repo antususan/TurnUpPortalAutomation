@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using TurnUpPortalAutomation.Utilities;
@@ -54,11 +55,11 @@ namespace TurnUpPortalAutomation.Pages
             IWebElement saveButton = driver.FindElement(By.Id("SaveButton"));
             saveButton.Click();
 
-         
+
             Wait.Waittobeclickable(driver, "Xpath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 2);
 
             //check if new time record has been created suceesfully 
-            Wait.Waittobeclickable(driver, "Xpath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span",10);
+            Wait.Waittobeclickable(driver, "Xpath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 10);
             IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
             goToLastPageButton.Click();
 
@@ -66,7 +67,7 @@ namespace TurnUpPortalAutomation.Pages
 
             IWebElement newRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
 
-      
+
         }
         //creating method for assertion Assertion 
         public string GetCode(IWebDriver driver)
@@ -74,7 +75,7 @@ namespace TurnUpPortalAutomation.Pages
             IWebElement newRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
             return newRecord.Text;
         }
-        public void EditTimeRecord(IWebDriver driver,string Code)
+        public void EditTimeRecord(IWebDriver driver, string code,string description)
         {
             IWebElement goToLastPageButtonForEdit = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
 
@@ -89,7 +90,7 @@ namespace TurnUpPortalAutomation.Pages
             IWebElement typecodeDropdownForEdit = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]/span/span[1]"));
             typecodeDropdownForEdit.Click();
 
-            
+
             Wait.Waittobeclickable(driver, "Xpath", "//*[@id=\"TypeCode_listbox\"]/li[1]", 2);
             IWebElement materialtypecode = driver.FindElement(By.XPath("//*[@id=\"TypeCode_listbox\"]/li[1]"));
             materialtypecode.Click();
@@ -99,14 +100,14 @@ namespace TurnUpPortalAutomation.Pages
             Wait.Waittobevisible(driver, "Id", "Code", 2);
             IWebElement editCodeTextbox = driver.FindElement(By.Id("Code"));
             editCodeTextbox.Clear();
-            editCodeTextbox.SendKeys(Code);
+            editCodeTextbox.SendKeys(code);
 
 
             //Edit Description 
             Wait.Waittobevisible(driver, "Id", "Description", 2);
             IWebElement editDescriptionTextbox = driver.FindElement(By.Id("Description"));
             editDescriptionTextbox.Clear();
-            editDescriptionTextbox.SendKeys("August19th2023");
+            editDescriptionTextbox.SendKeys(description);
 
 
             //Edit price
@@ -132,13 +133,19 @@ namespace TurnUpPortalAutomation.Pages
 
             Wait.Waittobeclickable(driver, "Xpath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 2);
 
-            
+
         }
         // Impliment assertion method 
         public string GetEditedCode(IWebDriver driver)
         {
-            IWebElement editedRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-            return editedRecord.Text;
+            IWebElement editedCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+            return editedCode.Text;
+        }
+
+        public string GetEditedDescription(IWebDriver driver)
+        {
+            IWebElement editedDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
+            return editedDescription.Text;
         }
 
         public void DeleteTimeRecord(IWebDriver driver)
@@ -163,9 +170,9 @@ namespace TurnUpPortalAutomation.Pages
 
             //check the deleted record is disappered 
 
-            IWebElement deletedRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+            
 
-            Assert.That(deletedRecord.Text  != "August19th", "Record has not been Deleted");
+            //Assert.That(deletedRecord.Text != "August19th", "Record has not been Deleted");
             //if (deletedRecord.Text != "August19th")
             //{
             //    Console.WriteLine("Record has been deleted Successfully");
@@ -175,6 +182,13 @@ namespace TurnUpPortalAutomation.Pages
             //{
             //    Console.WriteLine("Record has not been Deleted ");
             //}
+
+
+        }
+        public string GetDeletedCode (IWebDriver driver)
+            {
+            IWebElement deletedRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+            return deletedRecord.Text;
         }
 
     }
